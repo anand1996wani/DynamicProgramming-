@@ -62,6 +62,7 @@ def getWays(n, c):
     
     return table[len(c) - 1][n]
     
+    
 if __name__ == '__main__':
     fptr = open(os.environ['OUTPUT_PATH'], 'w')
 
