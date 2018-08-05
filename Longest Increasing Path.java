@@ -20,6 +20,9 @@ Constraints:
 1 ≤ N, M ≤ 100 
 1 ≤ A[i][j] ≤ 10^6
 
+Consider 2D array Matrix in which Matrix[i][j] denotes count of longest path starting from i,j. 
+Element Matrix[n-1][m-1] is set to 1.
+Then Matrix[i][j] = max(Matrix[i+1][j],Matrix[i][j+1])
 
 */
 import java.util.Scanner;
