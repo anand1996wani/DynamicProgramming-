@@ -1,0 +1,105 @@
+/*
+
+Dark Peace is volunteer in VISION 2K17.ChiefCO gave him a task to complete it before the CODEGEEKS which is on 11th march.ChiefCo asks DarkPeace to do the work as soon as possible.So to complete the task as soon as possible Dark Peace asks you to help him.You will be given two set of length N and M.Your task is to find whether the subset is present in the first set whose sum of elements is equal to the member of the set.You have to check for every member of the second set. Print Yes if subset is present and if not present print No and if the member exceeds the maximum sum of the set1 then print -1.
+
+Input Format
+
+First line contains two integer N and M. Following two lines contains the set of size N and M.
+
+Constraints
+
+1<=N<=1000 1<=M<=1000
+
+Output Format
+
+Print Yes or No or -1 accordingly with space between them
+
+Sample Input 0
+
+3 3
+1 7 4 
+10 14 4 
+Sample Output 0
+
+No -1 Yes 
+Explanation 0
+
+For first member no subset gives sum to 10 so we print No. 
+For second since maximum sum is 12 and 14 is greater than 12 so we print -1. 
+For last subset {4} exits whose sum is equal to 4 and Hence we print Yes
+
+*/
+
+import java.io.*;
+import java.util.*;
+
+public class Solution {
+
+    public static void main(String[] args) {
+        /* Enter your code here. Read input from STDIN. Print output to STDOUT. Your class should be named Solution. */
+        Scanner scanner = new Scanner(System.in);
+        int n = scanner.nextInt();
+        int m = scanner.nextInt();
+        int arrayN[] = new int[n];
+        int arrayM[] = new int[m];
+        int sumN = 0;
+        for(int i = 0; i < n;i++){
+            arrayN[i] = scanner.nextInt();
+            sumN = sumN + arrayN[i];
+        }
+        int maxM = 0;
+        for(int i = 0; i < m;i++){
+            arrayM[i] = scanner.nextInt();
+            if(maxM < arrayM[i] && arrayM[i] <= sumN){
+                maxM = arrayM[i];
+            }
+        }
+        if(n != 1){
+            Arrays.sort(arrayN);
+            int temp1[] = new int[maxM + 1];
+            int temp2[] = new int[maxM + 1];
+            for(int i = 0; i < maxM + 1;i++){
+                if(arrayN[0] == i)
+                    temp1[i] = 1;
+            }
+            temp1[0] = 1;
+            temp2[0] = 1;
+            for(int i = 1; i < n;i++){
+                for(int j = 0;j < maxM + 1;j++){
+                    if(j < arrayN[i]){
+                        temp2[j] = temp1[j];
+                    }else if(temp1[j] == 1){
+                        temp2[j] = 1;
+                    }else{
+                        temp2[j] = temp1[j - arrayN[i]]; 
+                    }
+                }
+                for(int z = 0;z < maxM + 1;z++)
+                    temp1[z] = temp2[z];
+            }
+
+            for(int i = 0;i < m;i++){
+                if(arrayM[i] > sumN){
+                    System.out.print("-1" + " ");
+                }else if(temp2[arrayM[i]] == 1){
+                    System.out.print("Yes" + " ");
+                }else if(temp2[arrayM[i]] == 0){
+                    System.out.print("No" + " ");
+                }   
+            }
+        }else{
+            boolean flag = false;
+            for(int i = 0; i < m;i++){
+                if(arrayM[i] == arrayN[0]){
+                    flag = true;
+                    break;
+                }
+            }
+            if(flag){
+                System.out.print("Yes"+" ");
+            }else{
+                System.out.print("No"+" ");
+            }
+        }
+    }
+}
